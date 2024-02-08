@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+
+    background-color: black;
+}
+
+@font-face {
+    font-family: 'Pacman';
+    src: url(../fonts/pac-font.ttf);
+}
+
+h1 {
+    font-family: "Pacman";
+    font-size: 72px;
+    color: yellow;
+    text-align: center;
+}
+
+/* reset rules */
+
+/* grid */
+#grid {
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.container {
+    margin: 0 auto;
+    padding-top: 50px;
+    max-width: 1000px;
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+
+    width: 142px;
+    height: 142px;
+    padding: 1px;
+    outline: 1px solid blue;
+    outline-offset: -5px;
+}
+
+.clicked {
+    background-color: rgb(76, 76, 206);
+}
+
+.squareMedium {
+    width: 111px;
+    height: 111px;
+}
+
+.squareHard {
+    width: 100px;
+    height: 100px;
+}
