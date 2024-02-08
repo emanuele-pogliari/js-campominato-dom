@@ -7,8 +7,9 @@ btnGen.addEventListener("click", mainFunction);
 let newElement;
 let score = 0;
 
+// funzione principale che genera la griglia e tutto il gioco
 function mainFunction() {
-    newAudio.play();
+    // newAudio.play();
     gridElement.innerHTML = "";
     let num = modifyDifficulty();
 
@@ -24,12 +25,12 @@ function mainFunction() {
 
             console.log(this.innerText);
             this.classList.add("clicked");
-
+            // se il numero della cella cliccata è contenuto dentro l'array allora stampa in console e applica l classe red a quell'elemento
+            // inoltre chiama la funzione loose con il numero delle bombe ma devo inviare alla funzione anche l'elemento.
             if (numberBombs.includes(Number(this.innerText))) {
                 console.log("bomba cliccata");
                 this.style.background = "red";
-                // chiamo funzione 
-                // lose();
+                lose(numberBombs, newElement);
             }
             // else {
             //     score++;
@@ -39,6 +40,7 @@ function mainFunction() {
     }
 }
 
+// creo una funzione che modifica la difficoltà prendendo il valore de select e ritorna la grandezza della griglia
 function modifyDifficulty() {
     let numberSquares = 0;
     let valueSquare = document.querySelector("#select-difficulty").value;
@@ -54,6 +56,7 @@ function modifyDifficulty() {
     return numberSquares;
 }
 
+// creo una funzione che cambia la grandezza della griglia prendendo in input, il numero delle celle e il singolo square
 function addClass(changeGrid, num) {
     let newClass = "a"
     if (num == 49) {
@@ -69,6 +72,8 @@ function addClass(changeGrid, num) {
     }
 }
 
+// creo una funzione che prenderà in ingresso la grandezza della griglia (num delle celle) e calcolerà i numeri casuali da 1 a n
+// se presente all'interno dell'array non lo inserirà, in caso contrario lo pusha dentro l'array. Alla fine ritornerà l'array.
 function randomBombsNumber(cells) {
     let arrayBombs = [];
     let randomNum;
@@ -82,6 +87,10 @@ function randomBombsNumber(cells) {
 }
 
 
-// function lose() {
+function lose(bombe, ??) {
+    for (let i = 0; i < bombe; i++) {
+    }
+    //se l'utente perde, la funzione lose sarà chiamata e bloccherà la griglia e rivelerà tutte le bombe
 
-// }
+    //creando un ciclo con tutte le posizioni e darà la classe "red" a tutti gli elementi che hanno i numeri presenti nell'array. 
+}
