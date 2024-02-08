@@ -2,6 +2,9 @@ const btnGen = document.querySelector("#btn-gen-game");
 const gridElement = document.querySelector("#grid");
 const newAudio = document.querySelector("#music-start");
 const scoreElement = document.querySelector("#score");
+const overlayElement = document.createElement("div");
+overlayElement.classList.add("overlay");
+
 
 btnGen.addEventListener("click", mainFunction);
 
@@ -32,11 +35,12 @@ function mainFunction() {
             // inoltre chiama la funzione loose con il numero delle bombe ma devo inviare alla funzione anche l'elemento.
             if (numberBombs.includes(Number(newElement.innerText))) {
                 let allCells = document.querySelectorAll(".square");
-                for (let i = 0; i < num; i++) {
+                for (let i = 0; i <= num; i++) {
                     if (numberBombs.includes(i)) {
                         let allBombs = allCells[i - 1];
                         allBombs.innerHTML = "bomba";
                         allBombs.style.background = "red";
+                        lose();
                     }
 
                 }
@@ -45,7 +49,6 @@ function mainFunction() {
                 newElement.classList.add("clicked");
 
                 if (pointsArr.includes(i)) {
-
                 }
                 else {
                     pointsArr.push(i);
@@ -105,4 +108,10 @@ function randomBombsNumber(cells) {
         }
     }
     return arrayBombs;
+}
+
+
+
+function lose() {
+    gridElement.append(overlayElement);
 }
