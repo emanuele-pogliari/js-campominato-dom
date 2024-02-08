@@ -1,21 +1,23 @@
 const btnGen = document.querySelector("#btn-gen-game");
 const gridElement = document.querySelector("#grid");
 const newAudio = document.querySelector("#music-start");
+const scoreElement = document.querySelector("#score");
 
 btnGen.addEventListener("click", mainFunction);
 
-let newElement;
-let score = 0;
 
 // funzione principale che genera la griglia e tutto il gioco
 function mainFunction() {
+    let score = 0;
+    scoreElement.innerHTML = "0";
     // newAudio.play();
     gridElement.innerHTML = "";
     let num = modifyDifficulty();
-
+    let pointsArr = [];
     let numberBombs = randomBombsNumber(num);
 
     for (let i = 0; i < num; i++) {
+        let newElement;
         newElement = document.createElement("div");
         newElement.classList.add("square");
         newElement.innerText = i + 1;
@@ -23,18 +25,36 @@ function mainFunction() {
 
         newElement.addEventListener("click", function () {
 
-            console.log(this.innerText);
-            this.classList.add("clicked");
+            console.log(newElement.innerText);
+
+            // newElement.classList.add("clicked");
             // se il numero della cella cliccata è contenuto dentro l'array allora stampa in console e applica l classe red a quell'elemento
             // inoltre chiama la funzione loose con il numero delle bombe ma devo inviare alla funzione anche l'elemento.
-            if (numberBombs.includes(Number(this.innerText))) {
-                console.log("bomba cliccata");
-                this.style.background = "red";
-                lose(numberBombs, newElement);
+            if (numberBombs.includes(Number(newElement.innerText))) {
+                let allCells = document.querySelectorAll(".square");
+                for (let i = 0; i < num; i++) {
+                    if (numberBombs.includes(i)) {
+                        let allBombs = allCells[i - 1];
+                        allBombs.innerHTML = "bomba";
+                        allBombs.style.background = "red";
+                    }
+
+                }
             }
-            // else {
-            //     score++;
-            // }
+            else {
+                newElement.classList.add("clicked");
+
+                if (pointsArr.includes(i)) {
+
+                }
+                else {
+                    pointsArr.push(i);
+                    scoreElement.innerHTML = pointsArr.length;
+                }
+            }
+
+            // questa soluzione mi permette di far funzionare lo score ma devo impostare una funzione per poter aggiornare il punteggio SOLO con le celle senza bombe.
+
         });
         gridElement.append(newElement);
     }
@@ -74,6 +94,7 @@ function addClass(changeGrid, num) {
 
 // creo una funzione che prenderà in ingresso la grandezza della griglia (num delle celle) e calcolerà i numeri casuali da 1 a n
 // se presente all'interno dell'array non lo inserirà, in caso contrario lo pusha dentro l'array. Alla fine ritornerà l'array.
+
 function randomBombsNumber(cells) {
     let arrayBombs = [];
     let randomNum;
@@ -84,13 +105,4 @@ function randomBombsNumber(cells) {
         }
     }
     return arrayBombs;
-}
-
-
-function lose(bombe, ??) {
-    for (let i = 0; i < bombe; i++) {
-    }
-    //se l'utente perde, la funzione lose sarà chiamata e bloccherà la griglia e rivelerà tutte le bombe
-
-    //creando un ciclo con tutte le posizioni e darà la classe "red" a tutti gli elementi che hanno i numeri presenti nell'array. 
 }
