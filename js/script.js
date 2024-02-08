@@ -1,13 +1,18 @@
 const btnGen = document.querySelector("#btn-gen-game");
-const gridElement = document.querySelector("#grid")
+const gridElement = document.querySelector("#grid");
+const newAudio = document.querySelector("#music-start");
 
-btnGen.addEventListener("click", genGrid);
+btnGen.addEventListener("click", mainFunction);
 
 let newElement;
+let score = 0;
 
-function genGrid() {
+function mainFunction() {
+    newAudio.play();
     gridElement.innerHTML = "";
     let num = modifyDifficulty();
+
+    let numberBombs = randomBombsNumber(num);
 
     for (let i = 0; i < num; i++) {
         newElement = document.createElement("div");
@@ -18,7 +23,17 @@ function genGrid() {
         newElement.addEventListener("click", function () {
 
             console.log(this.innerText);
-            this.classList.toggle("clicked");
+            this.classList.add("clicked");
+
+            if (numberBombs.includes(Number(this.innerText))) {
+                console.log("bomba cliccata");
+                this.style.background = "red";
+                // chiamo funzione 
+                // lose();
+            }
+            // else {
+            //     score++;
+            // }
         });
         gridElement.append(newElement);
     }
@@ -53,3 +68,20 @@ function addClass(changeGrid, num) {
         changeGrid.classList.add(newClass);
     }
 }
+
+function randomBombsNumber(cells) {
+    let arrayBombs = [];
+    let randomNum;
+    while (arrayBombs.length < 16) {
+        randomNum = Math.floor(Math.random() * cells + 1);
+        if (!arrayBombs.includes(randomNum)) {
+            arrayBombs.push(randomNum);
+        }
+    }
+    return arrayBombs;
+}
+
+
+// function lose() {
+
+// }
