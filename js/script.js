@@ -4,6 +4,8 @@ const newAudio = document.querySelector("#music-start");
 const scoreElement = document.querySelector("#score");
 const overlayElement = document.createElement("div");
 overlayElement.classList.add("overlay");
+const overlayMessage = document.createElement("p");
+overlayMessage.classList.add("overlay-text");
 
 
 btnGen.addEventListener("click", mainFunction);
@@ -12,7 +14,7 @@ btnGen.addEventListener("click", mainFunction);
 // funzione principale che genera la griglia e tutto il gioco
 function mainFunction() {
     let score = 0;
-    scoreElement.innerHTML = "0";
+    scoreElement.innerHTML = "";
     // newAudio.play();
     gridElement.innerHTML = "";
     let num = modifyDifficulty();
@@ -36,12 +38,13 @@ function mainFunction() {
             if (numberBombs.includes(Number(newElement.innerText))) {
                 let allCells = document.querySelectorAll(".square");
                 for (let i = 0; i <= num; i++) {
+                    let ghostColor = Math.floor(Math.random() * 3 + 1);
                     if (numberBombs.includes(i)) {
                         let allBombs = allCells[i - 1];
-                        allBombs.innerHTML = "bomba";
-                        allBombs.style.background = "red";
-                        lose();
+                        allBombs.innerHTML = `<img src=\"./img/ghost${ghostColor}.png" class=\"ghosts">";`
+                        lose(pointsArr.length);
                     }
+
 
                 }
             }
@@ -53,6 +56,9 @@ function mainFunction() {
                 else {
                     pointsArr.push(i);
                     scoreElement.innerHTML = pointsArr.length;
+                    if (num == pointsArr.length + numberBombs.length) {
+                        win(pointsArr.length);
+                    }
                 }
             }
 
@@ -107,11 +113,18 @@ function randomBombsNumber(cells) {
             arrayBombs.push(randomNum);
         }
     }
+    console.log(arrayBombs);
     return arrayBombs;
 }
 
 
 
-function lose() {
+function lose(playerScore) {
+    overlayElement.innerHTML = `<p class="overlay-text"> GAME OVER</p> <br> <p class="overlay-text"> YOUR SCORE: ${playerScore}</p>`;
+    gridElement.append(overlayElement);
+}
+
+function win(playerScore) {
+    overlayElement.innerHTML = `<p class="overlay-text">WELL DONE! YOU WON!</p> <br> <p class="overlay-text"> YOUR SCORE: ${playerScore}</p>`;
     gridElement.append(overlayElement);
 }
